@@ -52,10 +52,9 @@ class V1::EventsController < V1::BaseController
 
   end
 
-
   private
+
   def events_params
     params.required(:event).permit(:title, :description, :start_time, :end_time, :created_at, :updated_at)
   end
-
 end
