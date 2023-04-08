@@ -29,7 +29,7 @@ class V1::RsvpsController < V1::BaseController
 
   private
    def rsvp_params
-    params.required(:rsvp).permit(:event_id, :attending,:created_at, :updated_at)
+    params.required(:rsvp).permit(:attending)
   end
 
 end

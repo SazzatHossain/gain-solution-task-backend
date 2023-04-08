@@ -2,7 +2,7 @@ class V1::EventsController < V1::BaseController
   before_action :authenticate_user, only: [:create, :update]
 
  def index
-    per_page = params[:per_page] || 21
+    per_page = params[:per_page] || 6
     page = params[:page] || 1
         ##### Get from date and to date search data #######
         from = if params.key?(:from_date) && params[:from_date] != ''
@@ -20,9 +20,9 @@ class V1::EventsController < V1::BaseController
         end
 
     if params[:search]
-      @events = Event.where('title LIKE ? OR location LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+      @events = Event.page(page).per(per_page).where('title LIKE ? OR location LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
     else
-      @events = Event.all
+      @events = Event.page(page).per(per_page).all
       render status: :ok
     end
   end
@@ -30,6 +30,8 @@ class V1::EventsController < V1::BaseController
   def create
     user = User.find_by(id: @user.id)
     @event = user.events.create(events_params)
+    @event.user_id = user.id
+    puts user
     @event.save!
   end
 
@@ -55,6 +57,6 @@ class V1::EventsController < V1::BaseController
   private
 
   def events_params
-    params.required(:event).permit(:title, :description, :start_time, :end_time, :created_at, :updated_at)
+    params.required(:event).permit(:title, :location,:description, :start_time, :end_time, :created_at, :updated_at)
   end
 end
