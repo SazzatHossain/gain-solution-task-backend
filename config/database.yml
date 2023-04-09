@@ -16,9 +16,9 @@ default: &default
   adapter: mysql2
   encoding: utf8
   database: gain_solution_task_api
-  username: wsl_user
-  password: 'S@fe1234'
-  host: 192.168.16.104
+  username: root
+  password:
+  host: 127.0.0.1
   port: 3306
   #socket: /var/run/mysqld/mysqld.sock
 
