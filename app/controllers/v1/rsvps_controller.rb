@@ -16,16 +16,14 @@ def show_rsvp
       event = Event.find(params[:event_id])
       if event.rsvps.where(user_id: @user.id).exists?
               result = {
-                message: "true",
-                status: "200"
+                responded: "true",
               }
-         render json: result, status: 409 and return
+         render json: result and return
       else
               result = {
-                message: "false",
-                status: "409"
+                responded: "false",
               }
-         render json: result, status: 409 and return
+         render json: result and return
       end
      end
   def create
