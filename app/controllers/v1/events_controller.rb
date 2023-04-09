@@ -19,8 +19,8 @@ class V1::EventsController < V1::BaseController
                100.years.since.strftime('%Y-%m-%d')
         end
 
-    if params[:search] || params[:from_date]
-      @events = Event.page(page).per(per_page).where('title LIKE ? OR location LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+    if params[:search] || params[:from_date]  || params[:to_date]
+      @events = Event.page(page).per(per_page).where('title LIKE ? OR location LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%").where(created_at: from..to)
     else
       @events = Event.page(page).per(per_page).all
       render status: :ok
