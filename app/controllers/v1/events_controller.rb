@@ -19,7 +19,7 @@ class V1::EventsController < V1::BaseController
                100.years.since.strftime('%Y-%m-%d')
         end
 
-    if params[:search]
+    if params[:search] || params[:from_date]
       @events = Event.page(page).per(per_page).where('title LIKE ? OR location LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
     else
       @events = Event.page(page).per(per_page).all
@@ -57,6 +57,6 @@ class V1::EventsController < V1::BaseController
   private
 
   def events_params
-    params.required(:event).permit(:title, :location,:description, :start_time, :end_time, :created_at, :updated_at)
+    params.required(:event).permit(:title, :location,:description, :start_time, :end_time)
   end
 end
