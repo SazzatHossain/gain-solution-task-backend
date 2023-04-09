@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :home, :path => '/', only: [:index]
       resources :users
       get '/user-data', to: 'users#show'
+      get '/my-events-list', to: 'events#my_events_list'
       patch '/user-data-update', to: 'users#update'
       post '/sign-in', to: 'sessions#sign_in'
     end
