@@ -1,5 +1,5 @@
 class V1::EventsController < V1::BaseController
-  before_action :authenticate_user, only: [:create, :update]
+  before_action :authenticate_user, only: [:create, :update, :my_events_list]
 
  def index
     per_page = params[:per_page] || 6
@@ -26,6 +26,19 @@ class V1::EventsController < V1::BaseController
       render status: :ok
     end
   end
+
+  def my_events_list
+     per_page = params[:per_page] || 6
+     page = params[:page] || 1
+    user = User.find_by(id: @user.id)
+    if params[:search]
+      @events = Event.page(page).per(per_page).where('title LIKE ? OR location LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%").where(user_id: user.id)
+    else
+      @events = Event.page(page).per(per_page).where(user_id: user.id).all
+      render status: :ok
+    end
+  end
+
 
   def create
     user = User.find_by(id: @user.id)

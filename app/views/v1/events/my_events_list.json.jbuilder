@@ -11,7 +11,7 @@ json.data do
     json.user_id User.find_by(id: event.user_id).id
     json.user_first_name User.find_by(id: event.user_id).first_name
     json.user_last_name User.find_by(id: event.user_id).last_name
-    end
+  end
   json.limit_value @events.limit_value
   json.total_pages @events.total_pages
   json.current_page @events.current_page
